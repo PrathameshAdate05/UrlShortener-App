@@ -3,6 +3,7 @@ package com.prathamesh.urlshortener;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,9 +24,6 @@ public class MainActivity extends AppCompatActivity {
     CheckBox small, capital, numbers, specialChars;
     EditText inputUrl;
 
-
-    private ArrayList<Boolean> checkboxes;
-
     private Random random;
 
     private final String StringSmall = "abcdefghijklmnopqrstuvwxyz";
@@ -33,11 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private final String StringNumbers = "0123456789";
     private final String StringSpecialChars = "!@#$%^&*()-+/[]{}";
 
-
-
     private String shortUrl = "";
-    String allowedCharString = "";
-
+    private String allowedCharString = "";
     private int counter;
 
     @Override
@@ -61,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         small.setChecked(true);
         capital.setChecked(true);
 
-        checkboxes = new ArrayList<>();
+
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if(counter >= 2){
-                    shortUrl = getString(allowedCharString);
+                    shortUrl = "https://xyz.com/"+getString(allowedCharString);
                     counter = 0;
                     allowedCharString = "";
                 }
@@ -100,10 +95,10 @@ public class MainActivity extends AppCompatActivity {
                     allowedCharString = "";
                     return;
                 }
-                Toast.makeText(MainActivity.this, shortUrl, Toast.LENGTH_SHORT).show();
-
-
-
+                Intent intent = new Intent(MainActivity.this,MainActivity2.class);
+                intent.putExtra("ShortUrl",shortUrl);
+                intent.putExtra("LongUrl",inputUrl.getText().toString());
+                startActivity(intent);
 
             }
         });
